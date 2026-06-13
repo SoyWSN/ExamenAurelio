@@ -9,7 +9,6 @@ const emptyForm = {
   image: '',
   category: '',
   subcategory: '',
-  type: '',
 };
 
 export default function ProductForm({ initialData, onSubmit, onCancel }) {
@@ -24,7 +23,6 @@ export default function ProductForm({ initialData, onSubmit, onCancel }) {
         image: initialData.image || '',
         category: initialData.category || '',
         subcategory: initialData.subcategory || '',
-        type: initialData.type || '',
       });
     } else {
       setForm(emptyForm);
@@ -38,26 +36,12 @@ export default function ProductForm({ initialData, onSubmit, onCancel }) {
     ? Object.entries(selectedCategory.subcategories)
     : [];
 
-  // Tipos disponibles según categoría/subcategoría elegida
-  let typeOptions = [];
-  if (selectedCategory) {
-    if (form.subcategory && selectedCategory.subcategories?.[form.subcategory]?.types) {
-      typeOptions = Object.entries(selectedCategory.subcategories[form.subcategory].types);
-    } else if (!selectedCategory.subcategories && selectedCategory.types) {
-      typeOptions = Object.entries(selectedCategory.types);
-    }
-  }
-
   const handleChange = (field, value) => {
     setForm((prev) => {
       const next = { ...prev, [field]: value };
-      // Resetear campos dependientes al cambiar categoría/subcategoría
+      // Resetear subcategoría al cambiar la categoría madre
       if (field === 'category') {
         next.subcategory = '';
-        next.type = '';
-      }
-      if (field === 'subcategory') {
-        next.type = '';
       }
       return next;
     });
@@ -73,7 +57,6 @@ export default function ProductForm({ initialData, onSubmit, onCancel }) {
       ...form,
       price: parseFloat(form.price),
       subcategory: form.subcategory || null,
-      type: form.type || null,
     });
   };
 
@@ -124,7 +107,8 @@ export default function ProductForm({ initialData, onSubmit, onCancel }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {/* Ahora la cuadrícula es de 2 columnas ya que eliminamos "Tipo" */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-amber-900 mb-1">Categoría</label>
           <select
@@ -157,25 +141,6 @@ export default function ProductForm({ initialData, onSubmit, onCancel }) {
             {subcategoryOptions.map(([key, sub]) => (
               <option key={key} value={key}>
                 {sub.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-amber-900 mb-1">Tipo</label>
-          <select
-            value={form.type}
-            onChange={(e) => handleChange('type', e.target.value)}
-            disabled={typeOptions.length === 0}
-            className="w-full px-3 py-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 disabled:bg-amber-50"
-          >
-            <option value="">
-              {typeOptions.length === 0 ? 'No aplica' : 'Selecciona...'}
-            </option>
-            {typeOptions.map(([key, t]) => (
-              <option key={key} value={key}>
-                {t.label}
               </option>
             ))}
           </select>

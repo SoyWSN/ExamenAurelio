@@ -17,7 +17,7 @@ export default function CategoryPage({ page, onNavigate, onOpenProduct }) {
 
   const sections = getSectionsForPage({ category, subcategory, type });
 
-  // Título de la página
+  // Título principal de la página
   let pageTitle = cat.label;
   if (subcategory && cat.subcategories?.[subcategory]) {
     pageTitle = cat.subcategories[subcategory].label;
@@ -27,9 +27,9 @@ export default function CategoryPage({ page, onNavigate, onOpenProduct }) {
     if (typesSource?.[type]) pageTitle = typesSource[type].label;
   }
 
-  // Subnav: mostrar subcategorías o tipos disponibles para navegar
+  // Subnav: Muestra botones SOLO para subcategorías reales (Tradicionales / De Especialidad)
   const renderSubnav = () => {
-    // Si estamos en categoría sin subcategory y existen subcategorías
+    // Si estamos en la raíz de una categoría (ej. Roles de Canela) y tiene subcategorías, se muestran los botones
     if (!subcategory && !type && cat.subcategories) {
       return (
         <div className="flex flex-wrap gap-2 mb-8">
@@ -46,43 +46,7 @@ export default function CategoryPage({ page, onNavigate, onOpenProduct }) {
       );
     }
 
-    // Si estamos en subcategory "especialidad" sin type, mostrar tipos
-    if (subcategory && !type && cat.subcategories?.[subcategory]?.types) {
-      const types = cat.subcategories[subcategory].types;
-      return (
-        <div className="flex flex-wrap gap-2 mb-8">
-          {Object.entries(types).map(([key, t]) => (
-            <button
-              key={key}
-              onClick={() =>
-                onNavigate({ view: 'category', category, subcategory, type: key })
-              }
-              className="px-4 py-2 rounded-full border border-amber-200 text-amber-800 hover:bg-amber-100 font-medium text-sm transition-colors"
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-      );
-    }
-
-    // Pasteles: categoría sin subcategorías pero con types directos
-    if (!type && cat.types && !subcategory) {
-      return (
-        <div className="flex flex-wrap gap-2 mb-8">
-          {Object.entries(cat.types).map(([key, t]) => (
-            <button
-              key={key}
-              onClick={() => onNavigate({ view: 'category', category, type: key })}
-              className="px-4 py-2 rounded-full border border-amber-200 text-amber-800 hover:bg-amber-100 font-medium text-sm transition-colors"
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-      );
-    }
-
+    // Para cualquier otro caso (sabores de pasteles, sabores de roles), devolvemos null para que no pinte botones
     return null;
   };
 
@@ -90,6 +54,7 @@ export default function CategoryPage({ page, onNavigate, onOpenProduct }) {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
       <h1 className="text-3xl font-bold text-amber-900 mb-6">{pageTitle}</h1>
 
+      {/* Aquí reaparecen los botones de Tradicionales / De Especialidad */}
       {renderSubnav()}
 
       {sections.length === 0 || sections.every((s) => s.products.length === 0) ? (
