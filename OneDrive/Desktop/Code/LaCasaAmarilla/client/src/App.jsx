@@ -61,7 +61,7 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-amber-50/40">
+    <div className="min-h-screen flex flex-col">
       <Navbar currentPage={page} onNavigate={handleNavigate} />
       <Breadcrumb page={page} onNavigate={handleNavigate} />
       <main className="flex-1">{renderPage()}</main>
