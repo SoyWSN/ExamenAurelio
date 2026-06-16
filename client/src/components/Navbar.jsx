@@ -21,7 +21,11 @@ export default function Navbar({ currentPage, onNavigate }) {
             onClick={() => handleNavigate({ view: 'home' })}
             className="flex items-center gap-2"
           >
-            <span className="text-2xl">🏠</span>
+            <img 
+              src="/logo.png" 
+              alt="La Casa Amarilla" 
+              className="h-9 w-auto object-contain inline-block" 
+            />
             <span className="text-xl font-bold text-amber-900 tracking-tight">
               La Casa Amarilla
             </span>
