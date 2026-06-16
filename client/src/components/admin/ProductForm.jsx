@@ -53,6 +53,12 @@ export default function ProductForm({ initialData, onSubmit, onCancel }) {
       alert('Por favor completa al menos nombre, descripción, precio y categoría.');
       return;
     }
+
+    if (parseFloat(form.price) < 0) {
+      alert('El precio no puede ser un número negativo.');
+      return;
+    }
+
     onSubmit({
       ...form,
       price: parseFloat(form.price),

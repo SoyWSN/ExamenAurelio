@@ -74,6 +74,12 @@ app.get('/api/products', async (req, res) => {
 // Agregar un nuevo producto (Solo si el admin está logueado)
 app.post('/api/products', verificarToken, async (req, res) => {
     const { name, description, price, image, category, subcategory, type } = req.body;
+    
+    // CANDADO DE SEGURIDAD BACKEND:
+    if (Number(price) < 0) {
+        return res.status(400).json({ error: 'El precio del producto no puede ser negativo.' });
+    }
+
     try {
         const [result] = await db.query(
             'INSERT INTO productos (name, description, price, image, category, subcategory, type, status) VALUES (?, ?, ?, ?, ?, ?, ?, "active")',
@@ -90,12 +96,18 @@ app.post('/api/products', verificarToken, async (req, res) => {
 app.put('/api/products/:id', verificarToken, async (req, res) => {
     const { id } = req.params;
     const { name, description, price, image, category, subcategory, type, status } = req.body;
+    
+    // CANDADO DE SEGURIDAD BACKEND:
+    if (Number(price) < 0) {
+        return res.status(400).json({ error: 'El precio del producto no puede ser negativo.' });
+    }
+
     try {
         await db.query(
             'UPDATE productos SET name=?, description=?, price=?, image=?, category=?, subcategory=?, type=?, status=? WHERE id=?',
             [name, description, price, image, category, subcategory || null, type || null, status, id]
         );
-        res.json({ message: 'Producto actualizado exitosamente.' });
+        res.json({ message: 'Producto updated exitosamente.' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al actualizar el producto.' });
