@@ -2,8 +2,8 @@
 
 export default function Footer() {
   // CONFIGURACIÓN DE CONTACTO DIRECTO
-  const WHATSAPP_PHONE = "521234567890"; 
-  const INSTAGRAM_USER = "lacasaamarilla.lat";
+  const WHATSAPP_PHONE = "526531640838"; 
+  const INSTAGRAM_USER = "casaamarillapostres";
 
   return (
     <footer className="mt-auto" style={{ backgroundColor: '#FBE4B0' }}>
