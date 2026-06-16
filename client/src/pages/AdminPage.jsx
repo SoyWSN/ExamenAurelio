@@ -70,13 +70,14 @@ export default function AdminPage({ products, onFetchProducts, onNavigate }) {
     setTimeout(() => setFeedback(''), 4000);
   };
 
-  // 2. FUNCIÓN PARA REACTIVAR PANES FUERA DE TEMPORADA
+// 2. FUNCIÓN PARA REACTIVAR PANES FUERA DE TEMPORADA (CORREGIDA)
   const handleReactivate = async (productId, assignment) => {
     const targetProduct = products.find((p) => p.id === productId);
     if (!targetProduct) return;
 
     try {
-      const res = await fetch(`/api/products/${editingProduct.id}`, {
+      // CORRECCIÓN: Usamos productId en lugar de editingProduct.id
+      const res = await fetch(`/api/products/${productId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +85,7 @@ export default function AdminPage({ products, onFetchProducts, onNavigate }) {
         },
         body: JSON.stringify({
           ...targetProduct,
-          ...assignment, // Le inyectamos la nueva categoría asignada por el admin
+          ...assignment, 
           status: 'active'
         })
       });
@@ -104,13 +105,14 @@ export default function AdminPage({ products, onFetchProducts, onNavigate }) {
     setTimeout(() => setFeedback(''), 4000);
   };
 
-  // 3. FUNCIÓN PARA MANDAR UN PAN A "FUERA DE TEMPORADA" (DESCONTINUAR)
+  // 3. FUNCIÓN PARA MANDAR UN PAN A "FUERA DE TEMPORADA" (CORREGIDA)
   const handleDiscontinue = async (productId) => {
     const targetProduct = products.find((p) => p.id === productId);
     if (!targetProduct) return;
 
     try {
-      const res = await fetch(`/api/products/${editingProduct.id}`, {
+      // CORRECCIÓN: Usamos productId en lugar de editingProduct.id
+      const res = await fetch(`/api/products/${productId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -119,7 +121,7 @@ export default function AdminPage({ products, onFetchProducts, onNavigate }) {
         body: JSON.stringify({
           ...targetProduct,
           status: 'discontinued',
-          category: null, // Reseteamos la zona como lo hacía tu mock original
+          category: null, 
           subcategory: null,
           type: null
         })
