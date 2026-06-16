@@ -21,7 +21,7 @@ export default function AdminPage({ products, onFetchProducts, onNavigate }) {
     try {
       if (editingProduct) {
         // MODO EDICIÓN: Petición PUT a /api/products/:id
-        const res = await fetch(`http://localhost:5000/api/products/${editingProduct.id}`, {
+        const res = await fetch(`/api/products/${editingProduct.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export default function AdminPage({ products, onFetchProducts, onNavigate }) {
         }
       } else {
         // MODO NUEVO PRODUCTO: Petición POST a /api/products
-        const res = await fetch('http://localhost:5000/api/products', {
+        const res = await fetch('/api/products', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ export default function AdminPage({ products, onFetchProducts, onNavigate }) {
     if (!targetProduct) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${productId}`, {
+      const res = await fetch(`/api/products/${editingProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export default function AdminPage({ products, onFetchProducts, onNavigate }) {
     if (!targetProduct) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${productId}`, {
+      const res = await fetch(`/api/products/${editingProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

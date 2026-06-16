@@ -9,7 +9,7 @@ export default function CartPage({ onNavigate }) {
 
   // CONFIGURACIÓN DE CONTACTO:
   // Cambia este número por el de tu hermano (con código de país, sin espacios ni el signo '+'. Ejemplo: 521234567890 para México)
-  const WHATSAPP_PHONE = "526531650326"; 
+  const WHATSAPP_PHONE = "526531640838"; 
   const INSTAGRAM_USER = "casaamarillapostres";
 
 // 1. FUNCIÓN PARA GENERAR EL TEXTO ESTRUCTURADO (Puros Bullet Points)
