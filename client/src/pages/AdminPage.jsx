@@ -105,13 +105,12 @@ export default function AdminPage({ products, onFetchProducts, onNavigate }) {
     setTimeout(() => setFeedback(''), 4000);
   };
 
-  // 3. FUNCIÓN PARA MANDAR UN PAN A "FUERA DE TEMPORADA" (CORREGIDA)
+// 3. FUNCIÓN PARA MANDAR UN PAN A "FUERA DE TEMPORADA" (Versión Blindada)
   const handleDiscontinue = async (productId) => {
     const targetProduct = products.find((p) => p.id === productId);
     if (!targetProduct) return;
 
     try {
-      // CORRECCIÓN: Usamos productId en lugar de editingProduct.id
       const res = await fetch(`/api/products/${productId}`, {
         method: 'PUT',
         headers: {
@@ -120,10 +119,7 @@ export default function AdminPage({ products, onFetchProducts, onNavigate }) {
         },
         body: JSON.stringify({
           ...targetProduct,
-          status: 'discontinued',
-          category: null, 
-          subcategory: null,
-          type: null
+          status: 'discontinued' // Solo cambiamos el estatus. Mantenemos su categoría intacta en la BD.
         })
       });
 
