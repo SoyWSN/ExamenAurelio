@@ -48,12 +48,7 @@ export default function Navbar({ currentPage, onNavigate }) {
                 {cat.label}
               </button>
             ))}
-            <button
-              onClick={() => handleNavigate({ view: 'login' })}
-              className="text-amber-900 hover:text-amber-600 font-medium transition-colors"
-            >
-              Admin
-            </button>
+            
           </nav>
 
           {/* Right side: cart + hamburger */}
@@ -126,12 +121,7 @@ export default function Navbar({ currentPage, onNavigate }) {
                 {cat.label}
               </button>
             ))}
-            <button
-              onClick={() => handleNavigate({ view: 'login' })}
-              className="text-left px-2 py-2 rounded text-amber-900 hover:bg-amber-100 font-medium"
-            >
-              Admin
-            </button>
+            
           </nav>
         )}
       </div>

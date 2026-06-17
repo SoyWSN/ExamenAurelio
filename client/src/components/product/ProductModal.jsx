@@ -5,14 +5,15 @@ import { useCart } from '../../context/CartContext';
 export default function ProductModal({ product, onClose }) {
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
-  const [added, setAdded] = useState(false);
 
   if (!product) return null;
 
   const handleAdd = () => {
+    // 1. Agrega el producto con la cantidad seleccionada al contexto global
     addToCart(product, quantity);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    
+    // 2. Línea clave: Desmonta el modal de inmediato regresando al catálogo
+    onClose(); 
   };
 
   return (
@@ -76,11 +77,9 @@ export default function ProductModal({ product, onClose }) {
 
           <button
             onClick={handleAdd}
-            className={`w-full py-3 rounded-lg font-semibold text-white transition-colors ${
-              added ? 'bg-green-600' : 'bg-amber-600 hover:bg-amber-700'
-            }`}
+            className="w-full py-3 rounded-lg font-semibold text-white transition-colors bg-amber-600 hover:bg-amber-700"
           >
-            {added ? '¡Agregado al carrito!' : 'Agregar al carrito'}
+            Agregar al carrito
           </button>
         </div>
       </div>

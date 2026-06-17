@@ -22,8 +22,6 @@ function AppContent() {
   const [products, setProducts] = useState([]);
 
   // Función para consultar los productos al backend
-// Dentro de client/src/App.jsx
-
   const fetchProducts = async () => {
     try {
       const res = await fetch('/api/products');
@@ -50,6 +48,22 @@ function AppContent() {
     setPage(target);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // =========================================================================
+  // ENTRADA SECRETA AL PANEL DE ADMINISTRACIÓN
+  // =========================================================================
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('admin') === 'true') {
+      // Te manda al flujo de Login / Admin de forma interna
+      handleNavigate({ view: 'login' }); 
+      
+      // Limpia el "?admin=true" de la barra de direcciones del navegador
+      // para que si alguien mira tu pantalla no sepa cómo entraste.
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+  // =========================================================================
 
   const renderPage = () => {
     switch (page.view) {

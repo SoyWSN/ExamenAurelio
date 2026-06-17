@@ -94,6 +94,7 @@ export default function ProductForm({ initialData, onSubmit, onCancel }) {
           <input
             type="number"
             step="0.01"
+            min="0"
             value={form.price}
             onChange={(e) => handleChange('price', e.target.value)}
             className="w-full px-3 py-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
